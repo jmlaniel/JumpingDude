@@ -5,3 +5,5 @@ bin/JumpingDude.vs
 .asminfo.txt
 .gitignore
 .source.txt
+ByteDump.txt
+.gitignore

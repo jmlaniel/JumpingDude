@@ -24,7 +24,8 @@ BasicUpstart2(Start)
 .const PlayerXMinLo             = 4     // Minimum X coordinate allowed
 .const PlayerXMaxHi             = 1
 .const PlayerXMaxLo             = 88    // Maximum X coordinate allowed
-.const PlayerXSpeed             = 2     // X speed for player
+.const ForwardSpeed             = 2     // X speed for forward mouvement
+.const BackwardSpeed            = 1     // X speed when backing up during jump
 
 //==============================================================================
 .label JoystickState            = $02A7 // See joystick mask in Constants.asm
@@ -34,6 +35,7 @@ BasicUpstart2(Start)
 .label IdleDirection            = $02AB // +1 = right, 255 (-1) = left, 0 = idle
 .label Jumping                  = $02AC // +1 if jumping, 0 otherwise
 .label JumpIndex                = $02AD // Varies from 0 to 11 (12 states)
+.label PlayerXSpeed             = $02AE // X speed value
 
 .label PlayerXHiInit            = 0
 .label PlayerXLoInit            = 24    // Initial X coordinate
@@ -112,6 +114,8 @@ Start:
     sta SPMC1                           // Set Multicolor #2
     
     // Setup Player animation
+    lda #ForwardSpeed
+    sta PlayerXSpeed                    // Set initial speed    
     lda #0
     sta FrameCounter                    // Set FrameCounter at 0
     sta JumpIndex
@@ -215,9 +219,19 @@ UpdatePlayer:
     SetAnimation(PlayerSpriteNo,libSprite_ACTIVE,<AnimatePlayerRight,>AnimatePlayerRight,AnimatePlayerRightLen,PlayerFrameDelay,libSprite_LOOPING,libSprite_ONDEMAND)
     lda PlayerDirection
     sta PlayerPreviousDirection     // Update previous direction
-!:    
+!:
+    lda IdleDirection               // Test for backward jumping right
+    cmp PlayerPreviousDirection
+    beq !ForwardSpeed+
+    lda #BackwardSpeed
+    sta PlayerXSpeed
+    jmp !SetSprite+
+!ForwardSpeed:
+    lda #ForwardSpeed
+    sta PlayerXSpeed
+!SetSprite:
     lda #0                          // X Hi
-    ldx #PlayerXSpeed               // X Lo
+    ldx PlayerXSpeed               // X Lo
     ldy #PlayerSpriteNo
     jsr libSprites.AddToX           // Update Player X
     rts
@@ -237,8 +251,18 @@ UpdatePlayer:
     lda PlayerDirection
     sta PlayerPreviousDirection     // Update previous direction
 !:    
+    lda IdleDirection               // Test for backward jumping right
+    cmp PlayerPreviousDirection
+    beq !ForwardSpeed+
+    lda #BackwardSpeed
+    sta PlayerXSpeed
+    jmp !SetSprite+
+!ForwardSpeed:
+    lda #ForwardSpeed
+    sta PlayerXSpeed
+!SetSprite:
     lda #0                          // X Hi
-    ldx #PlayerXSpeed               // X Lo
+    ldx PlayerXSpeed               // X Lo
     ldy #PlayerSpriteNo
     jsr libSprites.SubFromX         // Update Player X
     rts
