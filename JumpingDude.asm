@@ -8,7 +8,7 @@ BasicUpstart2(Start)
 #import "libSprites.asm"
 
 //==============================================================================
-.const PlayerSpriteNo           = 0     // Player Sprite number = 0
+.const PlayerSpriteNo           = 0     // Player Sprite number
 .const PlayerFrameDelay         = 8     // Frame between walking sprite update
 .const PlayerJumpFrameDelay     = 16    // Frame between jumping sprite update
 
