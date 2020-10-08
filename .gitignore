@@ -1,4 +1,7 @@
-/.asminfo.txt
-/.source.txt
-/bin
-/ByteDump.txt
+bin/JumpingDude.dbg
+bin/JumpingDude.prg
+bin/JumpingDude.sym
+bin/JumpingDude.vs
+.asminfo.txt
+.gitignore
+.source.txt
