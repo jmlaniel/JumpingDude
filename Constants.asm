@@ -29,18 +29,21 @@
 // $0200-$9FFF  RAM (40K)
 
 .label HIBASE                  = $0288
+// Video bank starting address + start os screen memory
+// = $4000 + $0400 = $4400 (see constants.asm for more details)
 .label SCREENRAM               = $4400
+// Sprite pointer address = Video Bank starting address + $07F8
+// = $4000 + $07F8 (See constants.asm for more details)
 .label SPRITE0                 = $47F8         // Sprite 0 data pointer
+// Screen map starting address (see JumpingDude.asm for more details)
 .label SCREENMAP               = $8000
-
-// $0801
-// Game code is placed here by using the *=$0801 directive 
-// in gameMain.asm 
-
-// 192 decimal * 64(sprite size) = 10880(hex $2A80)
-//.label SPRITERAM       = 170
 // (SPRITE0 dec - VideoBank dec)/64 = (28672-16384)/64 = 192
 .label SPRITERAM               = 192
+
+// Sprites data                = $7000
+// Character set               = $7800
+// Screen Map                  = $8000
+// Main program (Start)        = $9000
 
 //===============================================================================
 // $D000-$DFFF  IO (4K)

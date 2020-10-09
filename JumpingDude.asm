@@ -194,7 +194,7 @@ TestJoystickNull:
     lda #directionStoodStill
     sta PlayerDirection             // Idle, set direction = +0
     lda PlayerPreviousDirection
-    sta IdleDirection               // Idle direction, set direction = 0
+    sta IdleDirection               // Save previous direction in IdleState
     jsr UpdatePlayer
 
 //==============================================================================
@@ -224,14 +224,14 @@ UpdatePlayer:
     cmp PlayerPreviousDirection
     beq !ForwardSpeed+
     lda #BackwardSpeed
-    sta PlayerXSpeed
+    sta PlayerXSpeed                // Jumping backward, set BackwardSpeed
     jmp !SetSprite+
 !ForwardSpeed:
     lda #ForwardSpeed
-    sta PlayerXSpeed
+    sta PlayerXSpeed                // Jumping backward, set ForwardSpeed
 !SetSprite:
     lda #0                          // X Hi
-    ldx PlayerXSpeed               // X Lo
+    ldx PlayerXSpeed                // X Lo
     ldy #PlayerSpriteNo
     jsr libSprites.AddToX           // Update Player X
     rts
@@ -255,14 +255,14 @@ UpdatePlayer:
     cmp PlayerPreviousDirection
     beq !ForwardSpeed+
     lda #BackwardSpeed
-    sta PlayerXSpeed
+    sta PlayerXSpeed                // Jumping backward, set BackwardSpeed
     jmp !SetSprite+
 !ForwardSpeed:
     lda #ForwardSpeed
-    sta PlayerXSpeed
+    sta PlayerXSpeed                // Jumping backward, set ForwardSpeed
 !SetSprite:
     lda #0                          // X Hi
-    ldx PlayerXSpeed               // X Lo
+    ldx PlayerXSpeed                // X Lo
     ldy #PlayerSpriteNo
     jsr libSprites.SubFromX         // Update Player X
     rts
@@ -274,7 +274,7 @@ UpdatePlayer:
     bne !GoingIdleLeft+             // Check for right direction
 !GoingIdleRight:
     lda Jumping
-    cmp #jmpSt_StartJumping
+    cmp #jmpSt_StartJumping         // If jumping, no change
     bcs !NoChange+
     ldy #PlayerSpriteNo
     lda IdlePlayerRight
@@ -283,7 +283,7 @@ UpdatePlayer:
     rts
 !GoingIdleLeft:    
     lda Jumping
-    cmp #jmpSt_StartJumping
+    cmp #jmpSt_StartJumping         // If jumping, no change
     bcs !NoChange+
     ldy #PlayerSpriteNo
     lda IdlePlayerLeft
@@ -293,7 +293,7 @@ UpdatePlayer:
 
 //==============================================================================
 JumpCycle:
-    lda FrameCounter
+    lda FrameCounter    // Frame counter goes from 0 to 63 with 16 jumping sprites
     cmp #4
     beq !+
     cmp #8
