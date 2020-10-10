@@ -1,4 +1,4 @@
-This is a sidescroller project programmed in assembly for the Commodore 64.
+This project consists in a plateformer game programmed in assembly for the Commodore 64.
 The code needs to be compiled with the Kick Assembler compiler http://www.theweb.dk/KickAssembler/Main.html
 
 The libraries have been developped by OldSkoolCoder for his Hunchback Twitch series except for the screen library
