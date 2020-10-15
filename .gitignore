@@ -1,9 +1,13 @@
-bin/JumpingDude.dbg
-bin/JumpingDude.prg
-bin/JumpingDude.sym
-bin/JumpingDude.vs
 .asminfo.txt
 .gitignore
 .source.txt
 ByteDump.txt
 .gitignore
+JumpingDudeV2.dbg
+JumpingDudeV2.prg
+JumpingDudeV2.sym
+JumpingDudeV2.vs
+JumpingDude.vs
+JumpingDude.sym
+JumpingDude.prg
+JumpingDude.dbg
