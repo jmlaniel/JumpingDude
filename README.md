@@ -13,11 +13,14 @@ What the player can do :
 - Waking animation
 - Jumping sprite
 - Have a separate sprite when the player is idle
+- Limit the player from going outside the screen on left/right. I have modified the OldSkoolCoder's libSprites.asm to implement the x clamping (I have basically translated Derek Morris math macros)
 
 Things to do next :
-- Integrate the new joystick library developped by OldSkoolCoder
 - Interact with the plateforms and obstacles
-- Limit the player from going outside the screen on left/right
+- Write the y clamping subroutine
 
 Many thanks at OldSkooCoder for his devotion and enthusiam at teaching us the rudiment of Commodore 64 assmebly.
 https://oldskoolcoder.co.uk/
+For more information concerning Derek Morris macros : (you should buy the book!)
+https://www.retrogamedev.com/
+
