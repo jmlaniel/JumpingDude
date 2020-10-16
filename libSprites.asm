@@ -18,6 +18,11 @@
     .const XPandX = %00000001 
     .const XPandY = %00000010
 
+    .const XMinHi = 0
+    .const XMinLo = 24     // Minimum X coordinate allowed = 24
+    .const XMaxHi = 1
+    .const XMaxLo = 64     // Maximum X coordinate allowed = 256 + 64 = 320
+
     SpriteMask:
         .byte %00000001                         // Sprite 0
         .byte %00000010                         // Sprite 1
@@ -48,7 +53,7 @@
     Frame:      .fill MaximumNoOfSprites, 0
     Priority:   .fill MaximumNoOfSprites, 0    
     Expand:     .fill MaximumNoOfSprites, 0     // 0 = Normal, 1 = X Big, 2 = Y Big, 3 = Both  
-
+    
     .namespace Animation
     {
         Active:     .fill MaximumNoOfSprites, 0    
@@ -405,6 +410,46 @@
         rts
     }
 
+    MinX:
+    {
+        // Y = SpriteNumber
+        // Data Destroyed : Y
+        
+        // high byte
+        lda XHi,y               // load Number 1
+        cmp #XMaxHi             // compare with Number 2
+        bmi !skip+              // if Number 1 < Number 2 then skip
+        lda #XMaxHi
+        sta XHi,y               // else replace Number1 with Number2
+
+        // low byte
+        lda #XMaxLo             // load Number 2
+        cmp XLo,y               // compare with Number 1
+        bcs !skip+              // if Number 2 >= Number 1 then skip
+        sta XLo,y               // else replace Number1 with Number2
+    !skip:
+        rts
+    }
+
+    MaxX:
+    {
+        // Y = SpriteNumber
+        // Data Destroyed : Y
+    
+        // high byte
+        lda #XMinHi             // load Number 2
+        cmp XHi,y               // compare with Number 1
+        bcc !skip+              // if Number 2 < Number 1 then skip
+        sta XHi,y               // else replace Number1 with Number2
+
+        // low byte
+        lda #XMinLo             // load Number 2
+        cmp XLo,y               // compare with Number 1
+        bcc !skip+              // if Number 2 < Number 1 then skip
+        sta XLo                 // else replace Number1 with Number2
+    !skip:
+        rts
+    }
 //*************************************************************************************************************
     SpriteMultiColour:
     {

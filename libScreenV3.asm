@@ -7,7 +7,7 @@
     .const TextScreen = 68      // Pointer : (VideoBank+ScreenMem*64)/256
     .const CharacterHome = 14   // Character Memory at $4000+3800$
 
-    .const BC = BROWN           // Border Color
+    .const BC    = BROWN           // Border Color
     .const BCKG0 = LIGHT_BLUE   //Background color 0
     .const BCKG1 = ORANGE       //Background color 1
     .const BCKG2 = LIGHT_RED    //Background color 2

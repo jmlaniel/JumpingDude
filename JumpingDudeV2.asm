@@ -21,10 +21,10 @@ BasicUpstart2(Start)
 .const directionStoodStill      = 0     // Idle = 0
 .const directionRight           = 1     // Right = +1
 
-.const PlayerXMinHi             = 0
-.const PlayerXMinLo             = 4     // Minimum X coordinate allowed
-.const PlayerXMaxHi             = 1
-.const PlayerXMaxLo             = 88    // Maximum X coordinate allowed
+// .const PlayerXMinHi             = 0
+// .const PlayerXMinLo             = 4     // Minimum X coordinate allowed
+// .const PlayerXMaxHi             = 1
+// .const PlayerXMaxLo             = 88    // Maximum X coordinate allowed
 .const ForwardSpeed             = 2     // X speed for forward mouvement
 .const BackwardSpeed            = 1     // X speed when backing up during jump
 
@@ -228,6 +228,9 @@ UpdatePlayer:
     ldx PlayerXSpeed                // X Lo
     ldy #PlayerSpriteNo
     jsr libSprites.AddToX           // Update Player X
+    ldy #PlayerSpriteNo
+    jsr libSprites.MinX             // Clamp x position
+
     rts
 
 !GoingLeft:
@@ -259,6 +262,8 @@ UpdatePlayer:
     ldx PlayerXSpeed                // X Lo
     ldy #PlayerSpriteNo
     jsr libSprites.SubFromX         // Update Player X
+    ldy #PlayerSpriteNo
+    jsr libSprites.MaxX             // Clamp x position
     rts
 
 !GoingIdle:
