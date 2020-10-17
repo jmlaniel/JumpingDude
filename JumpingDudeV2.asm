@@ -10,8 +10,8 @@ BasicUpstart2(Start)
 
 //==============================================================================
 .const PlayerSpriteNo           = 0     // Player Sprite number = 0
-.const PlayerFrameDelay         = 8     // Frame between walking sprite update
-.const PlayerJumpFrameDelay     = 16    // Frame between jumping sprite update
+.const PlayerFrameDelay         = 12    // Frame between walking sprite update
+.const PlayerJumpFrameDelay     = 1     // Frame between jumping sprite update
 
 .const jmpSt_NotJumping         = 0     // Not jumping state
 .const jmpSt_StartJumping       = 1     // Start jumping cycle state
@@ -41,7 +41,7 @@ BasicUpstart2(Start)
 //==============================================================================
 // Value to be added to y coordinate for simulating jump
 JumpArk:
-    .byte 232, 236, 240, 246, 250, 252, 254, 0, 0, 2, 4, 6, 10, 16, 20, 24
+    .byte 232, 238, 243, 247, 251, 253, 255, 0, 0, 1, 3, 5, 9, 13, 18, 24
 
 // Definition of sprites pointers
 IdlePlayerRight:
@@ -285,39 +285,40 @@ UpdatePlayer:
 
 //==============================================================================
 JumpCycle:
-    lda FrameCounter    // Frame counter goes from 0 to 63 with 16 jumping sprites
+    lda FrameCounter    // Frame counter goes from 0 to 32 with 16 jumping sprites
+    cmp #2
+    beq !+
     cmp #4
+    beq !+
+    cmp #6
     beq !+
     cmp #8
     beq !+
+    cmp #10
+    beq !+
     cmp #12
     beq !+
+    cmp #14
+    beq !+
     cmp #16
+    beq !+
+    cmp #18
     beq !+
     cmp #20
     beq !+
     cmp #22
     beq !+
+    cmp #24
+    beq !+
+    cmp #26
+    beq !+
     cmp #28
+    beq !+
+    cmp #30
     beq !+
     cmp #32
     beq !+
-    cmp #36
-    beq !+
-    cmp #40
-    beq !+
-    cmp #44
-    beq !+
-    cmp #48
-    beq !+
-    cmp #52
-    beq !+
-    cmp #56
-    beq !+
-    cmp #60
-    beq !+
-    cmp #64
-    beq !+
+
     rts
 
 !:
