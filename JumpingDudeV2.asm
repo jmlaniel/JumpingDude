@@ -21,10 +21,6 @@ BasicUpstart2(Start)
 .const directionStoodStill      = 0     // Idle = 0
 .const directionRight           = 1     // Right = +1
 
-// .const PlayerXMinHi             = 0
-// .const PlayerXMinLo             = 4     // Minimum X coordinate allowed
-// .const PlayerXMaxHi             = 1
-// .const PlayerXMaxLo             = 88    // Maximum X coordinate allowed
 .const ForwardSpeed             = 2     // X speed for forward mouvement
 .const BackwardSpeed            = 1     // X speed when backing up during jump
 
@@ -142,7 +138,6 @@ GameLooper:
     bne JumpingTest
     lda #0
     sta FrameCounter
-    
 
 JumpingTest:
     // Test if Jumping
@@ -167,7 +162,6 @@ ReadJoystickReg:
     jsr libJoyStick.libJoy2.CheckRight
     bcc !TestJoystickLeft+
     lda #directionRight
-    lda #directionRight
     sta PlayerDirection             // Right pressed, set direction = +1
     sta IdleDirection               // Idle direction, set direction = +1
     jsr UpdatePlayer
@@ -177,7 +171,6 @@ ReadJoystickReg:
     // Test if left direction is activated
     jsr libJoyStick.libJoy2.CheckLeft
     bcc !TestJoystickNull+
-    lda #directionLeft
     lda #directionLeft
     sta PlayerDirection             // Right pressed, set direction = +1
     sta IdleDirection               // Idle direction, set direction = +1
